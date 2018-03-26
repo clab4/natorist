@@ -142,7 +142,7 @@ document.addEventListener('init', function(event) {
     
     
      case 'event-page':
-    var events = ncmb.DataStore("tmpNews");
+    var events = ncmb.DataStore("tmpEvent");
     events.fetchAll()
         .then(function(results){
             reader = new FileReader();  //ファイルの読み込み
