@@ -1,33 +1,24 @@
 <ons-page id="main-page">
     
-    <body style="background-color : #00ffff">
-    <ons-toolbar>
-        <div class="center" style="background-color : #00ffff">なろう！なとりすと！</div>
-        <div class="left" style="background-color : #00ffff">
+    
+    <ons-toolbar style="background-color:#81DAF5">
+        <div class="center" >トップページ</div>
+        <div class="left">
             <ons-toolbar-button onclick="fn.open()">
                 <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="right" style="background-color : #00ffff"></div>
+        <div class="right" ></div>
     </ons-toolbar>
     
+    <!--カルーセル-->
+    <div style="background-color : pink">ニュース</div>
     <ons-carousel swipeable overscrollable auto-scroll auto-scroll-ratio="0.2" var="carousel" class="cal">
         <div id = "newsItems"></div> <!-- アイテムをjavascriptでかける-->
     </ons-carousel>
-
-    <!-- <ons-carousel swipeable auto-scroll overscrollable class="carousel">
-        <ons-carousel-item>
-            <ons-button onclick="window.open('http://www.kankou.natori.miyagi.jp/tokusan/1387');" class="carousel">アイテム1</ons-button>
-        </ons-carousel-item>
-        <ons-carousel-item>
-            <ons-button onclick="window.open('http://www.kankou.natori.miyagi.jp/');" class="carousel">アイテム2</ons-button>
-        </ons-carousel-item>
-        <ons-carousel-item>
-            <ons-button onclick="window.open('http://www.kankou.natori.miyagi.jp/');" class="carousel">アイテム3</ons-button>        
-        </ons-carousel-item>
-    </ons-carousel> -->
     
-    <center>
+    <!--メニューボタン-->
+   <center>
         <div>
             <ons-button onclick="fn.load('map.html')" class="btn">
                 <ons-icon icon="ion-android-map" size="20px"></ons-icon>
@@ -50,5 +41,4 @@
             </ons-button>
         </div>
     </center>
-    </body>
 </ons-page>

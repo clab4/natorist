@@ -1,5 +1,5 @@
 <ons-page>
- <script type="text/javascript">
+ 　 <script type="text/javascript">
     // Geolocation APIに対応している
     if (navigator.geolocation) {
       //alert("この端末では位置情報が取得できます");
@@ -10,75 +10,70 @@
     }
     </script>
   
-
-  
-    <ons-toolbar>
-        <div class="center">NATORIST開発中</div>
+    <ons-toolbar style="background-color:#81DAF5">
+        <div class="center">マップ</div>
        
 
-         <div class="left">
-          <ons-toolbar-button onclick="fn.open()">
+        <div class="left">
+            <ons-toolbar-button onclick="fn.open()">
             <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
-          </ons-toolbar-button>
+            </ons-toolbar-button>
         </div>
         
-          <div class="right">
-      <ons-back-button>戻る</ons-back-button>
-        </div>
-        
-
-
     </ons-toolbar>
 
     <div>
-     <ons-row>
-        <ons-col width="40%">
-            <section style="padding: 1px">
-            <ons-button  id="tracking_btn" modifier="large" onclick ="tracking()">表示切替</ons-button>
-            </section>
-        </ons-col>
-        <ons-col>
-            <section style="padding: 1px">
-                <img id="compass" src="img/arrow.png">
-            </section>
-        </ons-col>
-        <ons-col width="40%">
-            <section style="padding: 1px">
-            <div id="tracking_mode">現在地非表示</div>
-            </section>
-        </ons-col>
+        <ons-row>
+            <ons-col width="40%">
+                <section style="padding: 1px">
+                    <ons-button  id="tracking_btn" modifier="large" onclick ="tracking()">表示切替</ons-button>
+                </section>
+            </ons-col>
+            <ons-col>
+                <section style="padding: 1px">
+                    <img id="compass" src="img/arrow.png">
+                </section>
+            </ons-col>
+            <ons-col width="40%">
+                <section style="padding: 1px">
+                    <div id="tracking_mode">現在地非表示</div>
+                </section>
+            </ons-col>
         </ons-row>
-    <p>
-            <form name="chbox">
-            <input type="checkbox" name="select" value="イベント" >イベント
-<input type="checkbox" name="select" value="観光">観光
-<input type="checkbox"  name="select"  value="クーポン">クーポン
-<input type="checkbox" name="select"   value="避難所">避難所
-<button class="button1" type="button"  value="確認" onclick="Checkbox()">確認</button>
-</form>
-
-
-</p>
+        
+        <!--マップピン検索欄-->
+        <ons-button onclick="obj=document.getElementById('open').style; obj.display=(obj.display=='none')?'block':'none';" style="font-size:16pt">
+            <a style="cursor:pointer;">▼ マップピン検索</a>
+        </ons-button>
+        <div id="open" style="display:none;clear:both;">
+            <p>
+        
+            <section class="c-content"　name="chbox" >
+                <form name="chbox">
+                    <div class="left">
+                        <input id="c1" type="checkbox" name="select" value="イベント" ><label for="c1">イベント</label>
+                        <article class="ac-small"></article>
+                    </div>
+                    <div>
+                        <input id="c2" type="checkbox" name="select" value="観光" ><label for="c2">観光</label>
+                    </div>
+                    <div>
+                        <input id="c3" type="checkbox"  name="select"  value="クーポン" ><label for="c3">クーポン</label>
+                    </div>
+                    <div>
+                        <input id="c4" type="checkbox" name="select"   value="避難所" ><label for="c4">避難</label>
+                    </div>
+                    <p>
+                    <button class="button1" type="button"  value="確認" onclick="Checkbox()">確認</button>
+                </form>   
+            </section>
+        </div>
+        
+        <!--地図表示部-->
         <section>
-                <div id="canvas" style="width:100%; height: 400px"></div>
+            <div id="canvas" style="width:100%; height: 400px"></div>
         </section>
-   </div>
-  
-  <!--
-  <div>
-  <ul id="nav">
-  <li>
- <a href="https://twitter.com/share" class="twitter-share-button"
-data-hashtags="natori">
-SNS
-</a>
-  </li>
-  <li>
-  Camera
-  </li>
-  </ul>
-  
-  </div> -->
+    </div>
 </ons-page>
 
 

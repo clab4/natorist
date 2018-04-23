@@ -4,8 +4,8 @@ var    projection900913 = new OpenLayers.Projection("EPSG:900913");
 
 var popup = null;
 
-var markerType ='イベント';
-var dataStore ='tmpMarkers';
+var markerType ='';
+var dataStore ='';
 var checkDataStore='';
 
 
@@ -65,7 +65,7 @@ function writemap(lat,lon) {
 
     console.log(lat+":"+lon+":");
     //名取の表示
-    var lonLat = new OpenLayers.LonLat(140.882877,38.172748)  
+    var lonLat = new OpenLayers.LonLat(140.883215,38.173054)  
         .transform(
             projection4326, 
             projection900913
@@ -374,16 +374,16 @@ function Checkbox(){
         if(document.chbox.elements[i].checked){
         flag = true;
             if(document.chbox.elements[i].value=="イベント"){
-                checkDataStore='Marker_Event';
+                checkDataStore='Event_List';
                 }
             else if(document.chbox.elements[i].value=="観光"){
-                checkDataStore='Marker_Kanko';
+                checkDataStore='Tourism_List';
                 }
             else if(document.chbox.elements[i].value=="クーポン"){
-                checkDataStore='Marker_Coupon';
+                checkDataStore='Coupon_List';
                 }
             else if(document.chbox.elements[i].value=="避難所"){
-                checkDataStore='Marker_Hinan';
+                checkDataStore='Shelter_List';
                 }
                 find_geopoint();
         }

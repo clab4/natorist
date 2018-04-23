@@ -1,5 +1,6 @@
 var idx;  //情報の数
 var ddata = {};
+var link={};
 var reader;
 var couponinfo;
 
@@ -104,28 +105,22 @@ document.addEventListener('init', function(event) {
     break; 
 
     case 'coupon-page':
-    var coupons = ncmb.DataStore("tmpCoupon");
-    coupons.fetchAll()
-        .then(function(results){
+        //クーポンページ
+    var coupons = ncmb.DataStore("Item_info");
+    coupons.equalTo("type","避難所")
+                    .fetchAll()
+                .then(function(results){
             reader = new FileReader();  //ファイルの読み込み
             reader.onload = function(e) {  //読み込み終了  
-                    //idx++;
-                    var dinfo = ncmb.DataStore(results[idx].get("detailclass"));  //詳細のクラスの読み込み
-                    couponinfo=dinfo;
-                    console.log(results[idx].get("detailclass"));
-                    dinfo.fetchAll()
-                        .then(function(dres){
-                            ddata.img = dres[0].get("img");
+            　var dres=results[idx];
+              ddata.img = dres[0].get("img");
                             ddata.title= dres[0].get("title");
                             ddata.detail= dres[0].get("detail");
-                            console.log(idx);
+                          //  ddata.startDate=dres[0].get("startDate");
+                         //   ddata.endDate=dres[0].get("endDate");
                             
-                            items += '<ons-list-item onclick="onClickCoupon('+"'"+ddata.title+"','"+ddata.detail+"','"+ddata.img+"'"+')" ><img src ="'+reader.result+'" alt="イメージが取得できませんでした"  class="contain"/>'+ddata.title+'</ons-list-item>';
+                            items += '<ons-list-item onclick="onClickCoupon('+"'"+ddata.title+"','"+ddata.detail+"','"+ddata.img+"'"+')" ><img src ="'+reader.result+'" alt="イメージが取得できませんでした" class="contain"/><div class="center"><span class="list-item__title">'+ddata.title+'</span><span class="list-item__title">'+ddata.startDate+'~'+ddata.endDate+'</span></div></ons-list-item>';
                             document.getElementById("couponItems").innerHTML = items;  //main.htmlのカルーセルのdivに記述
-                        })
-                        .catch(function(err){
-                            console.error(err);
-                        })
                     
                     idx++;
                     if(idx<results.length){
@@ -142,26 +137,25 @@ document.addEventListener('init', function(event) {
     
     
      case 'event-page':
+<<<<<<< HEAD
+         //イベントページ
+    var events = ncmb.DataStore("Item_info");
+    events.equalTo("type","クーポン")
+              .fetchAll()
+=======
     var events = ncmb.DataStore("tmpEvent");
     events.fetchAll()
+>>>>>>> 710c6c6716cf8462fd534e00e41664aee420c9cd
         .then(function(results){
             reader = new FileReader();  //ファイルの読み込み
             reader.onload = function(e) {  //読み込み終了  
-                    //idx++;
-                    var dinfo = ncmb.DataStore(results[idx].get("detailClass"));  //詳細のクラスの読み込み
-                    console.log(results[idx].get("detailClass"));
-                    dinfo.fetchAll()
-                        .then(function(dres){
-                            ddata.img = dres[0].get("img");
-                            ddata.title= dres[0].get("title");
-                            ddata.detail= dres[0].get("detail");
+                            var ddata=dres[idx];
+                            ddata.img = dres[idx].get("img");
+                            ddata.title= dres[idx].get("title");
+                            ddata.detail= dres[idx].get("detail");
                             console.log(idx);
-                            items += '<ons-list-item onclick="onClickInfo('+"'"+ddata.title+"','"+ddata.detail+"','"+ddata.img+"'"+')" ><img src ="'+reader.result+'" alt="イメージが取得できませんでした" class="contain"/>'+ddata.title+'</ons-list-item>';
+                             items += '<ons-list-item onclick="onClickInfo('+"'"+ddata.title+"','"+ddata.detail+"','"+ddata.img+"'"+')" ><img src ="'+reader.result+'" alt="イメージが取得できませんでした" class="contain"/><div class="center"><span class="list-item__title">'+ddata.title+'</span><span class="list-item__title">'+ddata.startDate+'~'+ddata.endDate+'</span></div></ons-list-item>';
                             document.getElementById("eventItems").innerHTML = items;  //main.htmlのカルーセルのdivに記述
-                        })
-                        .catch(function(err){
-                            console.error(err);
-                        })
                     
                     idx++;
                     if(idx<results.length){
@@ -189,6 +183,7 @@ function onClickInfo(title,detail,img){
     NatNavi.pushPage('info.html', options);
 };
 
+//クーポン詳細画面への情報
 function onClickCoupon(title,detail,img){
     var options = {};
     options.data = {};
@@ -219,6 +214,7 @@ function loadNews(idx,results,reader){
     
 }
 
+//クーポン使用状況をアップロード
 function usedCoupon(){
     var userid;
     window.NCMB.monaca.getInstallationId(
