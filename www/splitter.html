@@ -1,33 +1,29 @@
 <!--メニューバー -->
-
 <ons-page>
-<ons-splitter>
+    <ons-splitter>
  
-    <ons-splitter-side id="menu" side="left" width="220px" collapse >
-     <ons-page>
-        <ons-list>
-          <ons-list-item onclick="fn.load('tab.html')" tappable>
-          トップ
-          </ons-list-item>
-          <ons-list-item onclick="fn.load('map.html')" tappable>
-            観光マップ
-          </ons-list-item>
-           <ons-list-item onclick="fn.load('coupon.html')" tappable>
-          クーポン
-          </ons-list-item>
-           <ons-list-item onclick="fn.load('event.html')" tappable>
-           イベント
-          </ons-list-item>
-          <ons-list-item onclick="fn.load('public.html')" tappable>
-            アクセス
-          </ons-list-item>
-        </ons-list>
-      </ons-page>
-    </ons-splitter-side>
+     <ons-splitter-side id="menu" side="left" width="220px" collapse >
+            <ons-page>
+                <ons-list>
+                    <ons-list-item onclick="fn.load('tab.html')" tappable>
+                        トップ
+                    </ons-list-item>
+                    <ons-list-item onclick="fn.load('map.html')" tappable>
+                        観光マップ
+                    </ons-list-item>
+                    <ons-list-item onclick="fn.load('coupon.html')" tappable>
+                        クーポン
+                    </ons-list-item>
+                    <ons-list-item onclick="fn.load('event.html')" tappable>
+                        イベント
+                    </ons-list-item>
+                    <ons-list-item onclick="window.open('http://www.city.natori.miyagi.jp/bunya/introduction/access')" tappable>
+                        アクセス
+                    </ons-list-item>
+                </ons-list>
+            </ons-page>
+        </ons-splitter-side>
      
- 
-    <ons-splitter-content id="content" page="tab.html"></ons-splitter-content>
-
- 
-  </ons-splitter>
-  </ons-page>
+        <ons-splitter-content id="content" page="tab.html"></ons-splitter-content>
+    </ons-splitter>
+</ons-page>
