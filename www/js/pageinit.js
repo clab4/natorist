@@ -137,10 +137,15 @@ document.addEventListener('init', function(event) {
     
     
      case 'event-page':
+<<<<<<< HEAD
          //イベントページ
     var events = ncmb.DataStore("Item_info");
     events.equalTo("type","クーポン")
               .fetchAll()
+=======
+    var events = ncmb.DataStore("tmpEvent");
+    events.fetchAll()
+>>>>>>> 710c6c6716cf8462fd534e00e41664aee420c9cd
         .then(function(results){
             reader = new FileReader();  //ファイルの読み込み
             reader.onload = function(e) {  //読み込み終了  
