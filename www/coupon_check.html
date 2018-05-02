@@ -1,10 +1,13 @@
 <!--クーポン確認画面-->
-<ons-page>
-    <ons-toolbar style="background-color:#81DAF5">
-        <div class="left"><ons-back-button onclick="usedCoupon()">戻る</ons-back-button></div>
-    </ons-toolbar>
-    <div style="width:100%;margin-left:auto;margin-right:auto">
-        <H2>この画面を見せてください</H2>
+  <ons-dialog id="my-dialog"  cancelable>
+    <div style="text-align: center; padding: 10px;">
+      このクーポンを使用します
+      <p>
+        画面を見せてください
+      </p>
+
+      <p>
+        <ons-button onclick="hideDialog('my-dialog')">閉じる</ons-button>
+      </p>
     </div>
-     
-</ons-page>
+  </ons-dialog>

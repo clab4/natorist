@@ -32,22 +32,31 @@ table.installationData td {
     width: 47%;
     height: 30%;
     line-height: 400%;
-    border-radius: 50%;
+    border-radius: 10%;
     text-align: center;
     vertical-align: middle;
     overflow: hidden;  
     background-image: linear-gradient(45deg, #709dff 0%, #91fdb7 100%);
     transition: .4s;
-    margin-top: 5%;
-    margin-bottom: 2%;　
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
+
 /*カルーセルサイズ*/
-.cal {
-    height: 200px;
+.cal{
+  object-fit: contain;
+    height: auto;
     width: 100%;
     margin-bottom: 2%;
      background-color : pink;
+}
+
+.map{
+    object-fit: contain;
+    height: 100%;
+    width: 100%
+   
 }
 
 /*ボタンサイズ*/
@@ -60,7 +69,7 @@ button.button1{
  
     /* 縦方向に10px、
      * 横方向に30pxの余白を指定 */
-    padding: 10px 30px;
+    padding: 10px 0px;
 }
 
 /*画像サイズ調整*/
@@ -70,42 +79,40 @@ button.button1{
  height: 50px;
 }
 
-/*c-content マップピン検索*/
-.c-content{
-    width:50%;
-    margin: 10px auto 30px auto;
+/*詳細画像サイズ調整*/
+.detailImage{
+  object-fit: contain;
+  width: 300px;
+  height: 200px;
+  background-color: #cfc;
+  border: 1px solid #cff;
+  display: block;
+ margin-left: auto;
+ margin-right: auto;
 }
 
-.c-content label{
-    font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
-    padding: 5px 20px;
-    position: relative;
-    z-index: 20;
-    display: block;
-    height: 30px;
-    cursor: pointer;
-    color: #777;
-    text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
-    line-height: 33px;
-    font-size: 19px;
-    background: linear-gradient(top, #ffffff 1%,#eaeaea 100%);
-    box-shadow:
-        0px 0px 0px 1px rgba(155,155,155,0.3),
-        1px 0px 0px 0px rgba(255,255,255,0.9) inset,
-        0px 2px 2px rgba(0,0,0,0.1);
-}
 
-.c-content input:checked + label,
-.c-content input:checked + label:hover{
-    background: #c6e1ec;
-    color: #3d7489;
-    text-shadow: 0px 1px 1px rgba(255,255,255, 0.6);
-    box-shadow:
-        0px 0px 0px 1px rgba(155,155,155,0.3),
-        0px 2px 2px rgba(0,0,0,0.1);
+/* checkbox02 */
+input[type=checkbox] {
+	display: none;
 }
-
-.c-content input{
-    display: none;
+input[type="checkbox"].checkbox02:checked + label {
+	background: #31A9EE;
+	color: #ffffff;
 }
-
+.check_label:hover {
+	background-color: #E2EDF9;
+}
+.check_label {
+	display: block;
+	float: left;
+	margin: 5px;
+	width: 100px;
+	height: 45px;
+	text-align: center;
+	line-height: 45px;
+	padding-left: 5px;
+	padding-right: 5px;
+	cursor: pointer;
+	color: #31A9EE;
+	border: 2px solid 

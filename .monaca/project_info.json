@@ -7,6 +7,9 @@
     "description-ja": "",
     "description-en": "",
     "category": "User Template",
-    "platform": [],
-    "name": "generated-1524477731-5ab8a9b9e788853f558b4567"
+    "platform": [
+        "android",
+        "ios"
+    ],
+    "name": "generated-1525250433-5ae2a02ce78885b71e8b4568"
 }

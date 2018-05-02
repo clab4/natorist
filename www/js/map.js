@@ -288,6 +288,7 @@ function find_geopoint(){
         checkDataStore                 // デフォルトのテキスト
     );  */
   
+  
     function onPrompt(results) {
       
       //  if(results.buttonIndex != 1)  return;
@@ -310,16 +311,17 @@ function find_geopoint(){
                     map.addLayer(markers);
                     var regist_location = result.get("geo");
                     var regist_name = result.get("name");
-                    var regist_type = result.get("type");
-                    
+                 //   var regist_type = result.get("type");
+
+                  /* onClickItem("'"+result.get("link")+"'"+','+"'"+checkDataStore+"'");
                     var regist_info = {};
                     regist_info.title = result.get("title");
                     regist_info.detail = result.get("detail");
-                    regist_info.img = result.get("img");
+                    regist_info.img = result.get("img"); */
                     
                     var iconsize = new OpenLayers.Size(32, 32);
                     var point    = new OpenLayers.Pixel(-(iconsize.w/2), -iconsize.h);
-                    var icon = selectIcon(regist_type);
+                    var icon = selectIcon(checkDataStore);
                     var marker = new OpenLayers.Marker(
                         new OpenLayers.LonLat(regist_location.longitude,regist_location.latitude)
                                     .transform(projection4326,projection900913),
@@ -328,7 +330,7 @@ function find_geopoint(){
                     
                     //マーカー名と詳細ボタンをポップアップで表示
                     marker.tag = regist_name;
-                    marker.tag += '<button onclick="onClickInfo('+"'"+regist_info.title+"','"+regist_info.detail+"','"+regist_info.img+"'"+')">詳しく</button>';
+                    marker.tag += '<button onclick=" onClickItem('+"'"+result.get("link")+"'"+','+"'"+checkDataStore+"'"+')">詳しく</button>';
     
                     // マーカーをタップした際にポップアップを表示
                     marker.events.register("touchstart", marker, function(event) {
@@ -349,22 +351,25 @@ function find_geopoint(){
             });
        } ;
     
-    };
+};
 
 function selectIcon(type) {
     //マーカータイプでアイコンを変更
     var icon = 'img/point_na32.png';
     switch(type){
-        case 'イベント':    icon = 'img/marker_ibe32.png'; break;
-        case '観光':        icon = 'img/marker_kan32.png'; break;
-        case 'クーポン':    icon = 'img/marker_cuu32.png'; break;
-        case '避難所':      icon = 'img/marker_hin32.png'; break;
+        case 'Event_List':    icon = 'img/marker_ibe32.png'; break;
+        case 'Tourism_List':        icon = 'img/marker_kan32.png'; break;
+        case 'Coupon_List':    icon = 'img/marker_cuu32.png'; break;
+        case 'Shelter_List':      icon = 'img/marker_hin32.png'; break;
+         case 'Food_List':      icon = 'img/point_na32.png'; break;
+          case 'Shop_List':      icon = 'img/point_na32.png'; break;
     }
     return icon;
 }
 
 //チェックボックス
 function Checkbox(){
+ 
  var flag = false; // 選択されているか否かを判定する変数
    // チェックボックスの数だけ判定を繰り返す
     fn.load('map.html'); //再読み込み        
@@ -384,6 +389,12 @@ function Checkbox(){
                 }
             else if(document.chbox.elements[i].value=="避難所"){
                 checkDataStore='Shelter_List';
+                }
+            else if(document.chbox.elements[i].value=="グルメ"){
+                checkDataStore='Food_List';
+                }
+             else if(document.chbox.elements[i].value=="お買い物"){
+                checkDataStore='Shop_List';
                 }
                 find_geopoint();
         }
@@ -453,5 +464,22 @@ function tracking() {
       );
     }
 
+//検索ダイアログ
+var showDialog = function() {
+  var dialog = document.getElementById('search-dialog');
 
+  if (dialog) {
+    dialog.show();
+  } else {
+    ons.createElement('popover.html', { append: true })
+      .then(function(dialog) {
+        dialog.show();
+      });
+  }
+};
 
+var hideDialog = function(id) {
+  document
+    .getElementById(id)
+    .hide();
+};

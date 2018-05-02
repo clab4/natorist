@@ -31,7 +31,7 @@ document.addEventListener('init', function(event) {
     document.getElementById("info-detail").innerHTML = page.data.detail;
     break;
     
-    case 'coupon_info-page':
+    case 'coupon-info-page':
       //情報ページ表示時の初期設定
     console.log(page.data.title);
     
@@ -70,107 +70,70 @@ document.addEventListener('init', function(event) {
     
      case 'main-page':
     //メインページ
-    console.log("main page init");
-    var news = ncmb.DataStore("tmpNews");
-    news.fetchAll()
-        .then(function(results){
-            reader = new FileReader();  //ファイルの読み込み
-            reader.onload = function(e) {  //読み込み終了  
-                    //idx++;
-                    var dinfo = ncmb.DataStore(results[idx].get("detailClass"));  //詳細のクラスの読み込み
-                    console.log(results[idx].get("detailClass"));
-                    dinfo.fetchAll()
-                        .then(function(dres){
-                            ddata.img = dres[0].get("img");
-                            ddata.title= dres[0].get("title");
-                            ddata.detail= dres[0].get("detail");
-                            console.log(idx);
-                            items += '<ons-carousel-item><button onclick="onClickInfo('+"'"+ddata.title+"','"+ddata.detail+"','"+ddata.img+"'"+')" class="cal"><img src ="'+reader.result+'" alt="イメージが取得できませんでした" style="height:100%;width:100%" /></button></ons-carousel-item>';
-                            document.getElementById("newsItems").innerHTML = items;  //main.htmlのカルーセルのdivに記述
-                        })
-                        .catch(function(err){
-                            console.error(err);
-                        })
-                    
-                    idx++;
-                    if(idx<results.length){
-                        loadNews(idx,results,reader);
-                    }
-            }
-            var items ='';
-            idx = 0; 
-            console.log(results.length);
-            loadNews(idx,results,reader);
-        })
+      displayList("News_List", "newsItems");
     break; 
 
     case 'coupon-page':
         //クーポンページ
-    var coupons = ncmb.DataStore("Item_info");
-    coupons.equalTo("type","避難所")
-                    .fetchAll()
-                .then(function(results){
-            reader = new FileReader();  //ファイルの読み込み
-            reader.onload = function(e) {  //読み込み終了  
-            　var dres=results[idx];
-              ddata.img = dres[0].get("img");
-                            ddata.title= dres[0].get("title");
-                            ddata.detail= dres[0].get("detail");
-                          //  ddata.startDate=dres[0].get("startDate");
-                         //   ddata.endDate=dres[0].get("endDate");
-                            
-                            items += '<ons-list-item onclick="onClickCoupon('+"'"+ddata.title+"','"+ddata.detail+"','"+ddata.img+"'"+')" ><img src ="'+reader.result+'" alt="イメージが取得できませんでした" class="contain"/><div class="center"><span class="list-item__title">'+ddata.title+'</span><span class="list-item__title">'+ddata.startDate+'~'+ddata.endDate+'</span></div></ons-list-item>';
-                            document.getElementById("couponItems").innerHTML = items;  //main.htmlのカルーセルのdivに記述
-                    
-                    idx++;
-                    if(idx<results.length){
-                        loadNews(idx,results,reader);
-                    }
-            }
-            var items ='';
-            idx = 0; 
-            console.log(results.length);
-            loadNews(idx,results,reader);
-        })
+        displayList("Coupon_List", "couponItems");
     break;
     
     
     
      case 'event-page':
-<<<<<<< HEAD
          //イベントページ
-    var events = ncmb.DataStore("Item_info");
-    events.equalTo("type","クーポン")
-              .fetchAll()
-=======
-    var events = ncmb.DataStore("tmpEvent");
-    events.fetchAll()
->>>>>>> 710c6c6716cf8462fd534e00e41664aee420c9cd
-        .then(function(results){
-            reader = new FileReader();  //ファイルの読み込み
-            reader.onload = function(e) {  //読み込み終了  
-                            var ddata=dres[idx];
-                            ddata.img = dres[idx].get("img");
-                            ddata.title= dres[idx].get("title");
-                            ddata.detail= dres[idx].get("detail");
-                            console.log(idx);
-                             items += '<ons-list-item onclick="onClickInfo('+"'"+ddata.title+"','"+ddata.detail+"','"+ddata.img+"'"+')" ><img src ="'+reader.result+'" alt="イメージが取得できませんでした" class="contain"/><div class="center"><span class="list-item__title">'+ddata.title+'</span><span class="list-item__title">'+ddata.startDate+'~'+ddata.endDate+'</span></div></ons-list-item>';
-                            document.getElementById("eventItems").innerHTML = items;  //main.htmlのカルーセルのdivに記述
-                    
-                    idx++;
-                    if(idx<results.length){
-                        loadNews(idx,results,reader);
-                    }
-            }
-            var items ='';
-            idx = 0; 
-            console.log(results.length);
-            loadNews(idx,results,reader);
-        })
-    break;
+          displayList("Event_List", "eventItems");
+     break;
   }
 });
 
+function displayList(dbName, listId){
+  //日付取得
+  var newday = new Date();
+  var year = newday.getFullYear();
+  var month = newday.getMonth()+1;
+　var day = newday.getDate();
+　var today=year+'/'+month+'/'+day;
+　//開始期間、終了期間と比較
+  var events = ncmb.DataStore(dbName); 
+    　 events.lessThanOrEqualTo("startDate",today)
+    　 .greaterThanOrEqualTo("endDate",today)
+    　 .fetchAll() //期間は無視して全部取り込む =>ToDo　期間内のアイテムのみ表示するようにすること
+        .then(function(results){
+          var items ="";
+          for (var i = 0; i < results.length; i++) {
+            var result = results[i];
+            
+            if(listId=="newsItems"){
+              var pic=result.get("thumbnail");
+               reader = new FileReader();  //ファイルの読み込み
+            reader.onload = function(e) {  //読み込み終了
+               loadNews(pic,reader);
+               } 
+                 items +='<ons-carousel-item><button onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')" class="cal"><img src ="'+reader.result+'" alt="イメージが取得できませんでした" style="height:100%;width:100%" /></ons-carousel-item>';  
+            
+            
+            }else{
+            items += '<ons-list-item modifier="chevron" onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')"><div class="center"><span class="list-item__title">'+result.name+'</span><span class="list-item__title">'+result.startDate+'~'+result.endDate+'</span></div></ons-list-item>';
+            }
+        }
+        document.getElementById(listId).innerHTML = items; 
+        })
+}
+
+function onClickItem(itemLink,dbName){
+  var item = ncmb.DataStore("Item_info");
+    item.equalTo("objectId",itemLink)
+    .fetchAll() 
+        .then(function(results){
+           console.log(results[0].get("title"));
+           if(dbName=="Coupon_List"){
+             onClickCoupon(results[0].get("title"), results[0].get("detail"), results[0].get("img"));  
+           }else{
+          onClickInfo(results[0].get("title"), results[0].get("detail"), results[0].get("img"));
+           }
+        })
+}
 
 function onClickInfo(title,detail,img){
     var options = {};
@@ -201,10 +164,10 @@ function onClickTopBtn(page){
     NatNavi.pushPage(page,options);
 }
 
-function loadNews(idx,results,reader){
 
-    console.log(results[idx].get("img"));
-    ncmb.File.download(results[idx].get("img"), "blob")  //ファイルのダウンロード
+function loadNews(pic,reader){
+
+    ncmb.File.download(pic, "blob")  //ファイルのダウンロード
         .then(function(blob) {
             reader.readAsDataURL(blob);  //ファイルの読み込み
         })
@@ -226,3 +189,22 @@ function usedCoupon(){
             coupon.set("couponInfo",couponinfo+'使用');
 }
 
+//クーポン使用ダイアログ
+var showTemplateDialog = function() {
+  var dialog = document.getElementById('my-dialog');
+
+  if (dialog) {
+    dialog.show();
+  } else {
+    ons.createElement('coupon_check.html', { append: true })
+      .then(function(dialog) {
+        dialog.show();
+      });
+  }
+};
+
+var hideDialog = function(id) {
+  document
+    .getElementById(id)
+    .hide();
+};
