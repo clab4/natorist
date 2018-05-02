@@ -1,6 +1,5 @@
-<ons-page id="main-page">
-    
-    
+<ons-page id="main-page" >
+    <div class="page__background" style="background-image: url('img/natori.jpg')"></div>
     <ons-toolbar style="background-color:#81DAF5">
         <div class="center" >トップページ</div>
         <div class="left">
@@ -10,7 +9,6 @@
         </div>
         <div class="right" ></div>
     </ons-toolbar>
-    
     <!--カルーセル-->
     <div style="background-color : pink">ニュース</div>
     <ons-carousel swipeable overscrollable auto-scroll auto-scroll-ratio="0.2" var="carousel" class="cal">
@@ -18,13 +16,12 @@
     </ons-carousel>
     
     <!--メニューボタン-->
-   <center>
+   <center  >
         <div>
             <ons-button onclick="fn.load('map.html')" class="btn">
                 <ons-icon icon="ion-android-map" size="20px"></ons-icon>
                 観光MAP
             </ons-button>
-            &nbsp;&nbsp;
             <ons-button onclick="fn.load('coupon.html')" class="btn">
                 <ons-icon icon="ion-ios-pricetags" size="20px"></ons-icon>
                 クーポン
@@ -34,7 +31,6 @@
                 <ons-icon icon="fa-calendar-o" size="20px"></ons-icon>
                 イベント    
             </ons-button>
-            &nbsp;&nbsp;
             <ons-button onclick="window.open('http://www.city.natori.miyagi.jp/bunya/introduction/access');" class="btn">
                 <ons-icon icon="ion-android-subway" size="20px"></ons-icon>
                 アクセス

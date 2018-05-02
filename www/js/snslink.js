@@ -1,6 +1,6 @@
 // ＳＮＳリンク
 
-ons.bootstrap();
+//ons.bootstrap();
 ons.disableAutoStatusBarFill();  // (Monaca enables StatusBar plugin by default)
 
 function twitText() {
