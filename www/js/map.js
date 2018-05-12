@@ -13,9 +13,6 @@ var mode = 0;
 var markerUpdateTimer;
 var meMarker;
 
-ons.ready(function(){
-    console.log('Onsen UI is ready!');
-});
 
 //OpenLayers.Control.Crosshairs のクラスを設定
 OpenLayers.Control.Crosshairs = OpenLayers.Class(OpenLayers.Control, {
@@ -363,6 +360,7 @@ function selectIcon(type) {
         case 'Shelter_List':      icon = 'img/marker_hin32.png'; break;
          case 'Food_List':      icon = 'img/point_na32.png'; break;
           case 'Shop_List':      icon = 'img/point_na32.png'; break;
+        case 'Photo_List':      icon = 'img/point_na32.png'; break;
     }
     return icon;
 }
@@ -395,6 +393,9 @@ function Checkbox(){
                 }
              else if(document.chbox.elements[i].value=="お買い物"){
                 checkDataStore='Shop_List';
+                }
+            else if(document.chbox.elements[i].value=="写真"){
+                checkDataStore='Photo_List';
                 }
                 find_geopoint();
         }
@@ -483,3 +484,9 @@ var hideDialog = function(id) {
     .getElementById(id)
     .hide();
 };
+
+
+//クーポンから地図
+function coupon_access(){
+    
+}

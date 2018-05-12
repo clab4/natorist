@@ -98,21 +98,14 @@ function displayList(dbName, listId){
   var events = ncmb.DataStore(dbName); 
     　 events.lessThanOrEqualTo("startDate",today)
     　 .greaterThanOrEqualTo("endDate",today)
-    　 .fetchAll() //期間は無視して全部取り込む =>ToDo　期間内のアイテムのみ表示するようにすること
+    　 .fetchAll() 
         .then(function(results){
           var items ="";
           for (var i = 0; i < results.length; i++) {
             var result = results[i];
-            
+      
             if(listId=="newsItems"){
-              var pic=result.get("thumbnail");
-               reader = new FileReader();  //ファイルの読み込み
-            reader.onload = function(e) {  //読み込み終了
-               loadNews(pic,reader);
-               } 
-                 items +='<ons-carousel-item><button onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')" class="cal"><img src ="'+reader.result+'" alt="イメージが取得できませんでした" style="height:100%;width:100%" /></ons-carousel-item>';  
-            
-            
+                 items +='<ons-carousel-item><button onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')" class="cal"><div class="center"><span class="list-item__title"><H1>'+result.name+'</H1></span><span class="list-item__title"><H3>'+result.startDate+'~'+result.endDate+'</H3></span></div></ons-carousel-item>';  
             }else{
             items += '<ons-list-item modifier="chevron" onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')"><div class="center"><span class="list-item__title">'+result.name+'</span><span class="list-item__title">'+result.startDate+'~'+result.endDate+'</span></div></ons-list-item>';
             }
