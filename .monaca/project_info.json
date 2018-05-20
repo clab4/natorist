@@ -2,11 +2,14 @@
     "framework_version": "3.5",
     "xcode_version": "9",
     "cordova_version": "7.1",
-    "title-ja": "",
+    "title-ja": "NATORIST20180507",
     "title-en": "",
-    "description-ja": "",
+    "description-ja": "バージョン１",
     "description-en": "",
     "category": "User Template",
-    "platform": [],
-    "name": "generated-1526120729-5ae97b7be7888558278b4567"
+    "platform": [
+        "android",
+        "ios"
+    ],
+    "name": "generated-1526778888-5af00217e7888558168b4568"
 }

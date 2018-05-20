@@ -6,13 +6,17 @@ var popup = null;
 
 var markerType ='';
 var dataStore ='';
-var checkDataStore='';
 
+var map = null;
+var markers = []; //マーカーレイヤー
 
 var mode = 0;
 var markerUpdateTimer;
 var meMarker;
 
+ons.ready(function(){
+    console.log('Onsen UI is ready!');
+});
 
 //OpenLayers.Control.Crosshairs のクラスを設定
 OpenLayers.Control.Crosshairs = OpenLayers.Class(OpenLayers.Control, {
@@ -47,6 +51,13 @@ OpenLayers.Control.Crosshairs = OpenLayers.Class(OpenLayers.Control, {
 
 //OSMの描画
 function writemap(lat,lon) {
+    //名取の表示
+    var lonLat = new OpenLayers.LonLat(140.883215,38.173054)  
+        .transform(
+            projection4326, 
+            projection900913
+        );
+
     map = new OpenLayers.Map("canvas");
     var mapnik = new OpenLayers.Layer.OSM();
     map.addLayer(mapnik);
@@ -61,22 +72,27 @@ function writemap(lat,lon) {
     map.addControl(cross);
 
     console.log(lat+":"+lon+":");
-    //名取の表示
-    var lonLat = new OpenLayers.LonLat(140.883215,38.173054)  
-        .transform(
-            projection4326, 
-            projection900913
-        );
+
     map.setCenter(lonLat, 15);
     
     //現在地のマーカー
     meMarker = new OpenLayers.Layer.Markers("Markers");
     map.addLayer(meMarker);
+   
+   //選択されているマーカーを表示
+    markers=[];
+    Checkbox();    
 }
 
 function startTracking(){
-    var watchId = navigator.geolocation.watchPosition( successWatch , onGeoError , geoOption2) ;
+    var watchId = navigator.geolocation.watchPosition( successWatch , onGeoError , geoOptions) ;
 }
+
+geoOptions = {
+  enableHighAccuracy: true,
+  timeout: 10000,
+  maximumAge: 0
+};
 
 function successWatch(position){
     //現在地にマーカーを表示
@@ -92,7 +108,7 @@ function successWatch(position){
     meMarker.destroy();
     
     if(mode != 0){
-        //console.log(position.coords.latitude+":"+position.coords.longitude);
+        console.log(position.coords.latitude+":"+position.coords.longitude);
         meMarker = new OpenLayers.Layer.Markers("Markers");
         map.addLayer(meMarker);
         meMarker.addMarker(marker);
@@ -114,7 +130,7 @@ function stopTracking(){
 }
 
 function startDrawCurrentPosition() {
-    navigator.geolocation.getCurrentPosition(onInitGeoSuccess, onGeoError, geoOption);
+    navigator.geolocation.getCurrentPosition(onInitGeoSuccess, onGeoError, geoOptions);
 }
 
 //OSMの描画時に位置情報取得に成功した場合のコールバック
@@ -270,13 +286,13 @@ function onCurrentSuccess(position){
 } */
 
 //登録されたポイントを引き出し地図上に表示する
-function find_geopoint(){
+function find_geopoint(checkDataStore){
     var lonLat = map.getCenter().transform(projection900913,projection4326);
     lonLat.lat = Math.round(lonLat.lat*1000000)/1000000;
     lonLat.lon = Math.round(lonLat.lon*1000000)/1000000;
         var geoPoint = new ncmb.GeoPoint(lonLat.lat, lonLat.lon);
         console.log("findpoints:"+lonLat.lat + ":" + lonLat.lon);
-        onPrompt();
+        onPrompt(checkDataStore);
     /*    navigator.notification.prompt(
         '',  // メッセージ
         onPrompt,                  // 呼び出すコールバック
@@ -285,8 +301,7 @@ function find_geopoint(){
         checkDataStore                 // デフォルトのテキスト
     );  */
   
-  
-    function onPrompt(results) {
+    function onPrompt(checkDataStore) {
       
       //  if(results.buttonIndex != 1)  return;
       //  checkDataStore = results.input1;
@@ -304,8 +319,8 @@ function find_geopoint(){
                 
                 for (var i = 0; i < results.length; i++) {
                     var result = results[i];
-                    var markers = new OpenLayers.Layer.Markers("Markers");
-                    map.addLayer(markers);
+                    markers.push(new OpenLayers.Layer.Markers("Markers"));
+                    map.addLayer(markers[markers.length-1]);
                     var regist_location = result.get("geo");
                     var regist_name = result.get("name");
                  //   var regist_type = result.get("type");
@@ -343,7 +358,7 @@ function find_geopoint(){
                      map.addPopup(popup);
                      });
     
-                    markers.addMarker(marker);
+                    markers[markers.length-1].addMarker(marker);
                 }
             });
        } ;
@@ -354,13 +369,13 @@ function selectIcon(type) {
     //マーカータイプでアイコンを変更
     var icon = 'img/point_na32.png';
     switch(type){
+        case '現在地':          icon = 'img/me.png'; break;
         case 'Event_List':    icon = 'img/marker_ibe32.png'; break;
         case 'Tourism_List':        icon = 'img/marker_kan32.png'; break;
         case 'Coupon_List':    icon = 'img/marker_cuu32.png'; break;
         case 'Shelter_List':      icon = 'img/marker_hin32.png'; break;
-         case 'Food_List':      icon = 'img/point_na32.png'; break;
-          case 'Shop_List':      icon = 'img/point_na32.png'; break;
-        case 'Photo_List':      icon = 'img/point_na32.png'; break;
+         case 'Food_List':      icon = 'img/marker_foo32.png'; break;
+          case 'Shop_List':      icon = 'img/marker_kai32.png'; break;
     }
     return icon;
 }
@@ -368,14 +383,22 @@ function selectIcon(type) {
 //チェックボックス
 function Checkbox(){
  
- var flag = false; // 選択されているか否かを判定する変数
+// var flag = false; // 選択されているか否かを判定する変数
    // チェックボックスの数だけ判定を繰り返す
-    fn.load('map.html'); //再読み込み        
-     
+   // fn.load('map.html'); //再読み込み        
+
+  if(markers.length != 0){
+    for(var i = 0; i < markers.length; i++) {
+      map.removeLayer(markers[i]);
+      console.log("removeLayer");
+    }
+    markers = [];
+  }
+   
+  var checkDataStore = ';'
     for(var i=0; i<document.chbox.elements.length-1;i++){
         // i番目のチェックボックスがチェックされているかを判定
         if(document.chbox.elements[i].checked){
-        flag = true;
             if(document.chbox.elements[i].value=="イベント"){
                 checkDataStore='Event_List';
                 }
@@ -394,10 +417,9 @@ function Checkbox(){
              else if(document.chbox.elements[i].value=="お買い物"){
                 checkDataStore='Shop_List';
                 }
-            else if(document.chbox.elements[i].value=="写真"){
-                checkDataStore='Photo_List';
-                }
-                find_geopoint();
+               // console.log("chck box");
+                find_geopoint(checkDataStore);
+
         }
     }
 }
@@ -418,6 +440,7 @@ function tracking() {
         case 0: //現在地を非表示
             mode = 1;  
             tracking_mode.innerHTML = '現在地を表示';
+            startTracking();
             break; 
     
         case 1: //現在地を表示
@@ -425,10 +448,10 @@ function tracking() {
               function (heading) {
                 $("#compass")
                   .css("transform", "rotate(" + heading.magneticHeading + "deg)");
-                   //console.log('Orientation: ' + heading.magneticHeading);
+                   console.log('Orientation: ' + heading.magneticHeading);
               },
               function (err) {
-                //console.log('watchHeading:'+err.message);
+                console.log('watchHeading:'+err.message);
               },
               {frequency: 1000}
             );
@@ -442,6 +465,7 @@ function tracking() {
             $("#compass")
                   .css("transform", "rotate(0deg)");
             tracking_mode.innerHTML = '現在地を非表示';
+            stopTracking();
             break;
     }
 }
@@ -484,9 +508,3 @@ var hideDialog = function(id) {
     .getElementById(id)
     .hide();
 };
-
-
-//クーポンから地図
-function coupon_access(){
-    
-}
