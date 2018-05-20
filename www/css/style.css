@@ -46,11 +46,11 @@ table.installationData td {
 /*カルーセルサイズ*/
 .cal{
   object-fit: contain;
-    height: auto;
+    height: 200px;
     width: 100%;
-    margin-bottom: 5%;
-    margin-top: 1%;
-     background-color : pink;
+    margin-bottom: 2%;
+    background-color : pink;
+    text-align: center;
 }
 
 .map{
@@ -92,6 +92,15 @@ button.button1{
  margin-right: auto;
 }
 
+.calImage{
+  object-fit: contain;
+  width: auto;
+  height: 200px;
+  border: 1px solid #cff;
+  display: block;
+ text-align: center;
+ background-color : pink;
+}
 
 /* checkbox02 */
 input[type=checkbox] {
@@ -116,4 +125,6 @@ input[type="checkbox"].checkbox02:checked + label {
 	padding-right: 5px;
 	cursor: pointer;
 	color: #31A9EE;
-	border: 2px solid 
+	border: 2px solid;
+}
+ 

@@ -18,7 +18,7 @@ document.addEventListener('init', function(event) {
       var dataUrl = reader.result;
       document.getElementById("info-img").src = dataUrl;
     }
-    ncmb.File.download(page.data.img, "blob")
+    ncmb.File.download(encodeURIComponent(page.data.img), "blob")
     .then(function(blob) {
       reader.readAsDataURL(blob);
     })
@@ -40,7 +40,7 @@ document.addEventListener('init', function(event) {
       var dataUrl = reader.result;
       document.getElementById("info-img").src = dataUrl;
     }
-    ncmb.File.download(page.data.img, "blob")
+    ncmb.File.download(encodeURIComponent(page.data.img), "blob")
     .then(function(blob) {
       reader.readAsDataURL(blob);
     })
@@ -70,16 +70,15 @@ document.addEventListener('init', function(event) {
     
      case 'main-page':
     //メインページ
-      displayList("News_List", "newsItems");
+    console.log("main page init");
+    displayList("News_List", "newsItems");
     break; 
 
     case 'coupon-page':
         //クーポンページ
         displayList("Coupon_List", "couponItems");
     break;
-    
-    
-    
+          
      case 'event-page':
          //イベントページ
           displayList("Event_List", "eventItems");
@@ -96,22 +95,30 @@ function displayList(dbName, listId){
 　var today=year+'/'+month+'/'+day;
 　//開始期間、終了期間と比較
   var events = ncmb.DataStore(dbName); 
+  console.log(dbName);
     　 events.lessThanOrEqualTo("startDate",today)
     　 .greaterThanOrEqualTo("endDate",today)
-    　 .fetchAll() 
+    　 .fetchAll() //期間は無視して全部取り込む =>ToDo　期間内のアイテムのみ表示するようにすること
         .then(function(results){
           var items ="";
           for (var i = 0; i < results.length; i++) {
             var result = results[i];
-      
+            
             if(listId=="newsItems"){
-                 items +='<ons-carousel-item><button onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')" class="cal"><div class="center"><span class="list-item__title"><H1>'+result.name+'</H1></span><span class="list-item__title"><H3>'+result.startDate+'~'+result.endDate+'</H3></span></div></ons-carousel-item>';  
-            }else{
-            items += '<ons-list-item modifier="chevron" onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')"><div class="center"><span class="list-item__title">'+result.name+'</span><span class="list-item__title">'+result.startDate+'~'+result.endDate+'</span></div></ons-list-item>';
+              var pic=result.get("thumbnail");
+              reader = new FileReader();  //ファイルの読み込み
+              loadNews(pic,reader);
+              reader.onload = function(e) {  //読み込み終了
+                 items +='<ons-carousel-item><button onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')" ><img src ="'+reader.result+'" class = "calImage" alt="イメージが取得できませんでした" /></ons-carousel-item>';                 
+                document.getElementById(listId).innerHTML = items;  
+              }
+            }
+            else{
+              items += '<ons-list-item modifier="chevron" onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')"><div class="center"><span class="list-item__title">'+result.name+'</span><span class="list-item__title">'+result.startDate+'~'+result.endDate+'</span></div></ons-list-item>';
+             document.getElementById(listId).innerHTML = items;
             }
         }
-        document.getElementById(listId).innerHTML = items; 
-        })
+      })
 }
 
 function onClickItem(itemLink,dbName){
@@ -159,15 +166,14 @@ function onClickTopBtn(page){
 
 
 function loadNews(pic,reader){
-
-    ncmb.File.download(pic, "blob")  //ファイルのダウンロード
+    console.log(pic);
+    ncmb.File.download(encodeURIComponent(pic), "blob")  //ファイルのダウンロード
         .then(function(blob) {
             reader.readAsDataURL(blob);  //ファイルの読み込み
         })
         .catch(function(err) {
             console.error(err);
         })
-    
 }
 
 //クーポン使用状況をアップロード
