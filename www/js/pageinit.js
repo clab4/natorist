@@ -103,18 +103,31 @@ function displayList(dbName, listId){
           var items ="";
           for (var i = 0; i < results.length; i++) {
             var result = results[i];
+
+           //使用期間表示方法
+            if(result.endDate=='2999/12/31'){
+              if(dbName=="Coupon_List"){
+                result.endDate='無期限';
+              }else{
+              result.endDate='';
+             }
+            }
+            if(result.startDate=='2000/1/1'){
+              result.startDate='';
+            }
+           
+
             
             if(listId=="newsItems"){
-              var pic=result.get("thumbnail");
+            var pic=result.get("thumbnail");
               reader = new FileReader();  //ファイルの読み込み
               loadNews(pic,reader);
               reader.onload = function(e) {  //読み込み終了
-                 items +='<ons-carousel-item><button onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')" ><img src ="'+reader.result+'" class = "calImage" alt="イメージが取得できませんでした" /></ons-carousel-item>';                 
-                document.getElementById(listId).innerHTML = items;  
+                 items +='<ons-carousel-item><button onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')"  class="cal"><img src ="'+reader.result+'" class = "calImage" alt="イメージが取得できませんでした" /> <div class="center"><span class="list-item__title"><H7>'+result.name+'</H7></span><span class="list-item__title">'+result.startDate+''+result.endDate+'</span></div></ons-carousel-item>';                 
+                document.getElementById(listId).innerHTML = items; 
               }
-            }
-            else{
-              items += '<ons-list-item modifier="chevron" onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')"><div class="center"><span class="list-item__title">'+result.name+'</span><span class="list-item__title">'+result.startDate+'~'+result.endDate+'</span></div></ons-list-item>';
+            }else{
+              items += '<ons-list-item modifier="chevron" onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')"><div class="center"><span class="list-item__title">'+result.name+'</span><span class="list-item__title">'+result.startDate+''+result.endDate+'</span></div></ons-list-item>';
              document.getElementById(listId).innerHTML = items;
             }
         }

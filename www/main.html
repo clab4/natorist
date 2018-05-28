@@ -1,6 +1,6 @@
 <ons-page id="main-page" >
-    <div class="page__background" style="background-image: url('img/natori.jpg')"></div>
-    <ons-toolbar style="background-color:#81DAF5">
+    <div class="page__background" style="background-image: url('img/natori.jpg');background-size: cover;"></div>
+    <ons-toolbar style="background-color:#81DAF5;">
         <div class="center" >トップページ</div>
         <div class="left">
             <ons-toolbar-button onclick="fn.open()">
@@ -10,9 +10,8 @@
         <div class="right" ></div>
     </ons-toolbar>
     <!--カルーセル-->
-    <div style="background-color : pink">ニュース</div>
-    <ons-carousel swipeable overscrollable auto-scroll auto-scroll-ratio="0.2" var="carousel" class="cal">
-        <div id = "newsItems" ></div> <!-- アイテムをjavascriptでかける-->
+    <ons-carousel swipeable overscrollable auto-scroll auto-scroll-ratio="0.2"  var="carousel" style="background-image:url('img/b119.jpg');" >
+        ニュース<div id = "newsItems"></div> <!-- アイテムをjavascriptでかける-->
     </ons-carousel>
     
     <!--メニューボタン-->
@@ -31,9 +30,13 @@
                 <ons-icon icon="fa-calendar-o" size="20px"></ons-icon>
                 イベント    
             </ons-button>
-            <ons-button onclick="window.open('http://www.city.natori.miyagi.jp/bunya/introduction/access');" class="btn">
+            <ons-button onclick="cordova.InAppBrowser.open('http://www.city.natori.miyagi.jp/bunya/introduction/access', '_system', 'location=yes');" class="btn">
                 <ons-icon icon="ion-android-subway" size="20px"></ons-icon>
                 アクセス
+            </ons-button>
+            <ons-button onclick="cordova.InAppBrowser.open('http://www.jma.go.jp/jp/week/312.html');" class="btn">
+                <ons-icon icon="ion-cloud" size="20px"></ons-icon>
+                天気(気象庁)
             </ons-button>
         </div>
     </center>
