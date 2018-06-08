@@ -7,7 +7,6 @@
                 <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="right" ></div>
     </ons-toolbar>
     <!--カルーセル-->
     <ons-carousel swipeable overscrollable auto-scroll auto-scroll-ratio="0.2"  var="carousel" style="background-image:url('img/b119.jpg');" >
@@ -15,7 +14,7 @@
     </ons-carousel>
     
     <!--メニューボタン-->
-   <center  >
+   <center >
         <div>
             <ons-button onclick="fn.load('map.html')" class="btn">
                 <ons-icon icon="ion-android-map" size="20px"></ons-icon>
@@ -30,11 +29,11 @@
                 <ons-icon icon="fa-calendar-o" size="20px"></ons-icon>
                 イベント    
             </ons-button>
-            <ons-button onclick="cordova.InAppBrowser.open('http://www.city.natori.miyagi.jp/bunya/introduction/access', '_system', 'location=yes');" class="btn">
+            <ons-button onclick="CheckMove('http://www.city.natori.miyagi.jp/bunya/introduction/access')" class="btn">
                 <ons-icon icon="ion-android-subway" size="20px"></ons-icon>
                 アクセス
             </ons-button>
-            <ons-button onclick="cordova.InAppBrowser.open('http://www.jma.go.jp/jp/week/312.html');" class="btn">
+            <ons-button onclick="CheckMove('http://www.jma.go.jp/jp/week/312.html')" class="btn">
                 <ons-icon icon="ion-cloud" size="20px"></ons-icon>
                 天気(気象庁)
             </ons-button>
