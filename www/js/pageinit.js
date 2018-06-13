@@ -88,11 +88,7 @@ document.addEventListener('init', function(event) {
 function displayList(dbName, listId){
 
   //日付取得
-  var newday = new Date();
-  var year = newday.getFullYear();
-  var month = newday.getMonth()+1;
-　var day = newday.getDate();
-　var today=year+'/'+month+'/'+day;
+ var  today=getDay();
 
 　//開始期間、終了期間と比較
   var events = ncmb.DataStore(dbName);
@@ -108,7 +104,7 @@ function displayList(dbName, listId){
      var result=results[j];
            //使用期間表示方法
      if(result.endDate=='2999/12/31' ){
-      var deadline='無期限';
+      var deadline='';
      }else{
       deadline=result.startDate+'～'+result.endDate;
      }
@@ -244,4 +240,15 @@ function CheckMove(url) {
 function okCoupon(){
    hideDialog('my-dialog');
   alert("画面を見せてください");
+}
+
+//日付取得
+function getDay(){
+var newday = new Date();
+  var year = newday.getFullYear();
+  var month = newday.getMonth()+1;
+　var day = newday.getDate();
+　var today=year+'/'+month+'/'+day;
+
+return today;
 }
