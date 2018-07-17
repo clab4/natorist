@@ -94,7 +94,6 @@ function displayList(dbName, listId){
   var events = ncmb.DataStore(dbName);
   events.lessThanOrEqualTo("startDate",today)
   .greaterThanOrEqualTo("endDate",today)
-  .limit(5)
   .fetchAll() 
  .then(function(results){
     var items ='';
@@ -109,8 +108,8 @@ function displayList(dbName, listId){
      }else{
       deadline=result.startDate+'～'+result.endDate;
      }
-   
-      if(listId=="newsItems"){           //ニュース
+
+      if(listId=="newsItems"){          
       var  reader = new FileReader();  //ファイルの読み込み 
       var pic=result.thumbnail;
        loadNews(pic,reader);
@@ -118,48 +117,6 @@ function displayList(dbName, listId){
         items +='<ons-carousel-item  onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+')"  class="cal"><img src ="'+reader.result+'" alt="イメージが取得できませんでした" class="calImage" /><div class="center"><span class="list-item__title"><H7>'+result.name+'</H7></span><span class="list-item__title"></span></div></ons-carousel-item>';                 
        document.getElementById(listId).innerHTML = items; 
       }
-     }else if(listId=="couponItems"){   //クーポン
-           var  reader = new FileReader();  //ファイルの読み込み 
-         var img = ncmb.DataStore("Item_info");
-           img.equalTo("objectId",result.get("link"))
-    .fetchAll() 
-        .then(function(results){
-          var pic=results[0].img;
-            loadNews(pic,reader) ;
-            reader.onload=function(e){
-          
-              //タッチできるか
-              var value=0;  
-  var Limit = ncmb.DataStore("Coupon_List");
-               Limit.equalTo("objectId",result.get("objectId"))
-                .fetchAll()
-                .then(function(results){
-                    value = results[0].get("limit");
-                    c_objectId=result.get("objectId");
-   window.NCMB.monaca.getInstallationId(
-        function(userid){
-  var myCoupon = ncmb.DataStore("Coupon_Record");
-  var mycoupon=new myCoupon();
-          //データがあるか判別
-         myCoupon.equalTo("deviceId",userid)
-                        .equalTo("couponId",c_objectId)
-                        .count()
-                        .fetchAll()
-                        .then(function(results2){
-                          console.log(results2[0].get("count"));   
-                          console.log(results2[0].count);
-                          if(results2[0].get("count")==0){
-                              items += '<ons-list-item disabled style="background-color:gray" tappable modifier="chevron" onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+','+"'"+result.get("objectId")+"'"+')"><div class="left"><img class="list-item__thumbnail" src ="'+reader.result+'" /></div><div class="center"><span class="list-item__title">'+result.name+'</span><span class="list-item__title">'+deadline+'</span></div></ons-list-item>';
-                          }else{
-                             items += '<ons-list-item tappable modifier="chevron" onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+','+"'"+result.get("objectId")+"'"+')"><div class="left"><img class="list-item__thumbnail" src ="'+reader.result+'" /></div><div class="center"><span class="list-item__title">'+result.name+'</span><span class="list-item__title">'+deadline+'</span></div></ons-list-item>';
-                          }
-                          document.getElementById(listId).innerHTML = items;
-                        })
-        }
-   )
-                })
-            }
-        })
      }else{
          var  reader = new FileReader();  //ファイルの読み込み 
          var img = ncmb.DataStore("Item_info");
@@ -286,23 +243,18 @@ function registerCoupon(){
                         .count()
                         .fetchAll()
                         .then(function(results){
-                          if(results.count==0){
-                           mycoupon.set("deviceId",userid)
-                                         .set("couponId",c_objectId)
-                                         .set("count",value-1)
-                                         .save()
-                          }else if(results.count==1 && results[0].get("count")==-2){  //無制限のと
+                         if(results.count==1 && results[0].get("limit")==-2){  //無制限のと
                           results[0].delete();
                           mycoupon.set("deviceId",userid)
                                          .set("couponId",c_objectId)
-                                         .set("count",-2)
+                                         .set("limit",-2)
                                          .save()
                         }else {  //まだつかえるとき
-                          var count=results[0].get("count");
+                          var count=results[0].get("limit");
                           results[0].delete();
                           mycoupon.set("deviceId",userid)
                                          .set("couponId",c_objectId)
-                                         .set("count",count-1)
+                                         .set("limit",count-1)
                                          .save()
                         }
             
@@ -324,6 +276,39 @@ var newday = new Date();
 return today;
 }
 
-
+//ボタン表示するか
+function couponButton(){
+   var value=0;  
+  var Limit = ncmb.DataStore("Coupon_List");
+               Limit.equalTo("objectId",c_objectId)
+                .fetchAll()
+                .then(function(results){
+                    value = results[0].get("limit");
+   window.NCMB.monaca.getInstallationId(
+        function(userid){
+  var myCoupon = ncmb.DataStore("Coupon_Record");
+  var mycoupon=new myCoupon();
+          //データがあるか判別
+         myCoupon.equalTo("deviceId",userid)
+                        .equalTo("couponId",c_objectId)
+                        .count()
+                        .fetchAll()
+                        .then(function(results){
+                          if(results.count==0){
+                           mycoupon.set("deviceId",userid)
+                                         .set("couponId",c_objectId)
+                                         .set("limit",value)
+                                         .save()
+                          }
+                          if(results[0].get("limit")==0){
+                            document.getElementById("hidebutton").innerHTML='<ons-button disabled onclick="showTemplateDialog()">クーポン使用済</ons-button>';
+                          }else{
+                            document.getElementById("hidebutton").innerHTML='<ons-button onclick="showTemplateDialog()">クーポン使用</ons-button>';
+                          }
+                        })
+        }
+   )
+                })
+}
 
 
