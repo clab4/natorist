@@ -32,6 +32,6 @@
     "commit": "a926ded5370d938773ba6c23bb5131f46d66b9b1"
   },
   "_source": "https://github.com/monaca/monaca-component-monaca-core-utils.git",
-  "_target": "~2.0.4",
+  "_target": "2.0.7",
   "_originalSource": "monaca-core-utils"
 }

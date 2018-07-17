@@ -1,4 +1,3 @@
-
 // SDKの初期化
 var ncmb = new NCMB(applicationKey, clientKey);
 
@@ -9,4 +8,3 @@ document.addEventListener("deviceready",
 function initFunc() {
     pushInit();
 }
-
