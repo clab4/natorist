@@ -1,4 +1,3 @@
-
 function pushInit() {
     // [NCMB] プッシュ通知受信時のコールバックを登録します
     window.NCMB.monaca.setHandler (function(jsonData){
@@ -16,7 +15,7 @@ function pushInit() {
     var errorCallback = function (err) {
         alert("端末登録に失敗しました:" + err);
     };
-
+  console.log("aaa");
     // [NCMB] デバイストークンを取得しinstallationに登録
     window.NCMB.monaca.setDeviceToken(
         applicationKey,
