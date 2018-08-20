@@ -1,4 +1,4 @@
-<ons-page>
+<ons-page >
  　 <script type="text/javascript">
     // Geolocation APIに対応している
     if (navigator.geolocation) {
@@ -24,15 +24,9 @@
           <ons-toolbar-button onclick="fn.load('map.html')">更新</ons-toolbar-button>
         </div>
         
-    </ons-toolbar>
-    
-          
-        <!--地図表示部-->
-            <div>. </div>
-            <div id="canvas" class="map"></div>
-            
-        
-         <ons-tabbar position="top">       
+    </ons-toolbar>    
+
+    <ons-tabbar position="bottom">       
                     <ons-tab id="tracking_btn" modifier="large" onclick ="tracking()">表示切替</ons-tab>
                     <ons-tab>
                       <img id="compass" src="img/arrow.png">
@@ -43,8 +37,17 @@
                     <ons-tab onclick="showDialog()" >
                       <ons-icon icon="ion-search"></ons-icon>
                     </ons-tab>
-    </ons-tabbar>        
-    
-    
+    </ons-tabbar>   
+            
+        
+
+          
+        <!--地図表示部-->
    
+            <div id="canvas" class="map"></div>
+            
+         
+    
+    
+
 </ons-page> 
