@@ -14,9 +14,6 @@ var mode = 0;
 var markerUpdateTimer;
 var meMarker;
 
-ons.ready(function(){
-    console.log('Onsen UI is ready!');
-});
 
 //OpenLayers.Control.Crosshairs のクラスを設定
 OpenLayers.Control.Crosshairs = OpenLayers.Class(OpenLayers.Control, {
@@ -302,7 +299,6 @@ function find_geopoint(checkDataStore){
     );  */
   
     function onPrompt(checkDataStore) {
-      
       //  if(results.buttonIndex != 1)  return;
       //  checkDataStore = results.input1;
         
@@ -316,7 +312,7 @@ function find_geopoint(checkDataStore){
                     // すでに別なポップアップが開いていたら消します
                     if (popup) map.removePopup(popup);
                 }
-                
+    
                 for (var i = 0; i < results.length; i++) {
                     var result = results[i];
                     markers.push(new OpenLayers.Layer.Markers("Markers"));
@@ -330,7 +326,7 @@ function find_geopoint(checkDataStore){
                     regist_info.title = result.get("title");
                     regist_info.detail = result.get("detail");
                     regist_info.img = result.get("img"); */
-                    
+                  //   console.log(results.length+"aaa");
                     var iconsize = new OpenLayers.Size(32, 32);
                     var point    = new OpenLayers.Pixel(-(iconsize.w/2), -iconsize.h);
                     var icon = selectIcon(checkDataStore);
@@ -376,16 +372,13 @@ function selectIcon(type) {
         case 'Shelter_List':      icon = 'img/marker_hin32.png'; break;
          case 'Food_List':      icon = 'img/marker_foo32.png'; break;
           case 'Shop_List':      icon = 'img/marker_kai32.png'; break;
+          default:   icon = 'img/marker_ibe32.png'; break;
     }
     return icon;
 }
 
 //チェックボックス
-function Checkbox(){
- 
-// var flag = false; // 選択されているか否かを判定する変数
-   // チェックボックスの数だけ判定を繰り返す
-   // fn.load('map.html'); //再読み込み        
+function Checkbox(){     
 
   if(markers.length != 0){
     for(var i = 0; i < markers.length; i++) {
@@ -395,7 +388,7 @@ function Checkbox(){
     markers = [];
   }
    
-  var checkDataStore = ';'
+  var checkDataStore = '';
     for(var i=0; i<document.chbox.elements.length-1;i++){
         // i番目のチェックボックスがチェックされているかを判定
         if(document.chbox.elements[i].checked){
@@ -508,3 +501,4 @@ var hideDialog = function(id) {
     .getElementById(id)
     .hide();
 };
+

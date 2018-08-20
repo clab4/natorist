@@ -1,5 +1,5 @@
 function news(){
-var News = ncmb.DataStore("news");
+var News = ncmb.DataStore("News_List");
     console.log("news get");
 News.fetch()
     .then(function(results){
@@ -12,3 +12,6 @@ News.fetch()
             console.log(err);
     });
 }
+
+
+
