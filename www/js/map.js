@@ -289,7 +289,7 @@ function find_geopoint(checkDataStore){
     lonLat.lon = Math.round(lonLat.lon*1000000)/1000000;
         var geoPoint = new ncmb.GeoPoint(lonLat.lat, lonLat.lon);
         console.log("findpoints:"+lonLat.lat + ":" + lonLat.lon);
-        onPrompt(checkDataStore);
+       // onPrompt(checkDataStore);
     /*    navigator.notification.prompt(
         '',  // メッセージ
         onPrompt,                  // 呼び出すコールバック
@@ -298,13 +298,13 @@ function find_geopoint(checkDataStore){
         checkDataStore                 // デフォルトのテキスト
     );  */
   
-    function onPrompt(checkDataStore) {
+  //  function onPrompt(checkDataStore) {
       //  if(results.buttonIndex != 1)  return;
       //  checkDataStore = results.input1;
         
         var PlacePointsClass = ncmb.DataStore(checkDataStore);
         //ニフティクラウド mobile backendにアクセスして検索開始位置を指定
-        PlacePointsClass.withinKilometers("geo", geoPoint, 5)
+        PlacePointsClass.withinKilometers("geo", geoPoint)
             .fetchAll()
             .then(function(results){
                 var data = [];
@@ -312,13 +312,14 @@ function find_geopoint(checkDataStore){
                     // すでに別なポップアップが開いていたら消します
                     if (popup) map.removePopup(popup);
                 }
-    
-                for (var i = 0; i < results.length; i++) {
+    console.log(results.length);
+                for (var i = 0; i <= results.length; i++) {
                     var result = results[i];
                     markers.push(new OpenLayers.Layer.Markers("Markers"));
                     map.addLayer(markers[markers.length-1]);
                     var regist_location = result.get("geo");
                     var regist_name = result.get("name");
+                      //    console.log(i);
                  //   var regist_type = result.get("type");
 
                   /* onClickItem("'"+result.get("link")+"'"+','+"'"+checkDataStore+"'");
@@ -357,7 +358,7 @@ function find_geopoint(checkDataStore){
                     markers[markers.length-1].addMarker(marker);
                 }
             });
-       } ;
+      // } ;
     
 };
 
