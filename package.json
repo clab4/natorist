@@ -10,7 +10,8 @@
             "cordova-plugin-camera": {},
             "cordova-plugin-device": {},
             "cordova-plugin-file": {},
-            "cordova-instagram-plugin": {}
+            "cordova-instagram-plugin": {},
+            "ncmb-push-monaca-plugin": {}
         }
     },
     "dependencies": {
@@ -22,6 +23,7 @@
         "cordova-plugin-camera": "4.0.1",
         "cordova-plugin-device": "2.0.1",
         "cordova-plugin-file": "5.0.0",
-        "cordova-instagram-plugin": "file:plugins\/cordova-instagram-plugin"
+        "cordova-instagram-plugin": "file:plugins\/cordova-instagram-plugin",
+        "ncmb-push-monaca-plugin": "2.0.3"
     }
 }

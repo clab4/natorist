@@ -46,9 +46,11 @@ share_pic: function share_pic(data)
         Instagram.share("data:image/jpeg;base64," + data, 'example caption', function(err) {});
     }
 // インスタグラムリンク
-function getPhoto() {            
+function getPhoto() {   
+    if( confirm("写真を撮ってInstagramに投稿します") ) {         
     navigator.camera.getPicture(onSuccess, onFail, 
     { quality: 50, destinationType: Camera.DestinationType.DATA_URL });
+    }
 }
 
 function onSuccess(imageData) {

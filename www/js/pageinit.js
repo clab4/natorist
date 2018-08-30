@@ -8,6 +8,7 @@ var userid;             //installationのobjectId
 var c_limit=[];       //取得したクーポン使用回数
 var showCoupon;  //ダイアログに表示するdetail保存
 var e_class;
+var e_geo;
 
 document.addEventListener('init', function(event) {
   var page = event.target;
@@ -214,22 +215,31 @@ function displayList(dbName, listId){
 
 //リストアイテム
 function onClickItem(itemLink,dbName,objectId,eclass){  
-  c_objectId2=objectId;
-  if(dbName=="Event_List"){
-  e_class=eclass;
-  }
   var item = ncmb.DataStore("Item_info");
     item.equalTo("objectId",itemLink)
     .fetchAll() 
         .then(function(results){
            if(dbName=="Coupon_List"){
+             c_objectId2=objectId;
              onClickCoupon(results[0].get("title"), results[0].get("detail"), results[0].get("img"));  
              showCoupon=results[0].get("detail");
            }else if(dbName=="Event_List"){
+             e_class=eclass;
+             e_geo=results[0].get("geo");
                onClickEvent(results[0].get("title"), results[0].get("detail"), results[0].get("img"));
              }else{
           onClickInfo(results[0].get("title"), results[0].get("detail"), results[0].get("img"));
            }
+        })
+}
+
+//マップのマーカー用
+function onClickMarker(itemLink,dbName){
+   var item = ncmb.DataStore("Item_info");
+    item.equalTo("objectId",itemLink)
+    .fetchAll() 
+        .then(function(results){
+  onClickInfo(results[0].get("title"), results[0].get("detail"), results[0].get("img"));
         })
 }
 
@@ -289,8 +299,8 @@ function loadNews(pic,reader){
 }
   
 //外部ページに移動するか判別
-function CheckMove(url) {
-    if( confirm(url+"を開きます") ) {
+function CheckMove(url,title) {
+    if( confirm(title+"を開きます") ) {
         window.open(url, '_system', 'location=yes');
     }
 }
@@ -356,11 +366,12 @@ function showMap(){
           fn.load('map.html');
   var countup = function(){
        find_geopoint(checkDataStore);
+        eventmap(e_geo.longitude,e_geo.latitude);
   } 
   setTimeout(countup, 1000);
     }	else{
 	window.alert('キャンセルされました'); 
-	}
+    }
 
 }
 

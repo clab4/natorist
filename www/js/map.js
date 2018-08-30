@@ -47,9 +47,9 @@ OpenLayers.Control.Crosshairs = OpenLayers.Class(OpenLayers.Control, {
 });
 
 //OSMの描画
-function writemap(lat,lon) {
-    //名取の表示
-    var lonLat = new OpenLayers.LonLat(140.883215,38.173054)  
+function writemap(lon,lat) {
+    //名取の表示 140.883215,38.173054
+    var lonLat = new OpenLayers.LonLat(lon,lat)  
         .transform(
             projection4326, 
             projection900913
@@ -78,7 +78,7 @@ function writemap(lat,lon) {
    
    //選択されているマーカーを表示
     markers=[];
-    Checkbox();    
+    //Checkbox();    
 }
 
 function startTracking(){
@@ -132,16 +132,30 @@ function startDrawCurrentPosition() {
 
 //OSMの描画時に位置情報取得に成功した場合のコールバック
 function onInitGeoSuccess(position){
-    writemap(position.coords.longitude,position.coords.latitude);        
+   //writemap(position.coords.longitude,position.coords.latitude);      
+ writemap( 140.883215,38.173054);  
     startTracking();
 };
+
+//イベントメイン会場を中心に
+function eventmap(lon,lat){
+   var lonLat = new OpenLayers.LonLat(lon,lat) 
+    .transform(
+            projection4326, 
+            projection900913
+        );
+   //console.log(lonLat+"aaa"); 
+    map.setCenter(lonLat,15);
+
+}
 
 
 //OSMの描画時に位置情報取得に成功した場合のコールバック
 function onGeoSuccess(position){
     current = new CurrentPoint();    
     current.geopoint = position.coords; //位置情報を保存する
-    writemap(current.geopoint.longitude,current.geopoint.latitude);
+  //  writemap(current.geopoint.longitude,current.geopoint.latitude);
+  writemap(140.883215,38.173054);
 };
 
 //位置情報取得に失敗した場合のコールバック
@@ -339,7 +353,7 @@ function find_geopoint(checkDataStore){
                     
                     //マーカー名と詳細ボタンをポップアップで表示
                     marker.tag = regist_name;
-                    marker.tag += '<button onclick=" onClickItem('+"'"+result.get("link")+"'"+','+"'"+checkDataStore+"'"+')">詳しく</button>';
+                    marker.tag += '<button onclick="onClickMarker('+"'"+result.get("link")+"'"+','+"'"+checkDataStore+"'"+')">詳しく</button>';
     
                     // マーカーをタップした際にポップアップを表示
                     marker.events.register("touchstart", marker, function(event) {
