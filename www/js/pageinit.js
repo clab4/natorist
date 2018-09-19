@@ -167,7 +167,7 @@ function displayList(dbName, listId){
         .then(function(results){
           var pic=results[0].img;
         
-            loadNews(pic,reader) ;
+           loadNews(pic,reader) ;
              reader.onload=function(e){
                   if(c_limit[j]<=-1){
                   c_limit[j]='無制限';
@@ -372,7 +372,6 @@ function showMap(){
     }	else{
 	window.alert('キャンセルされました'); 
     }
-
 }
 
 
