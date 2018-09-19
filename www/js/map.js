@@ -146,7 +146,6 @@ function eventmap(lon,lat){
         );
    //console.log(lonLat+"aaa"); 
     map.setCenter(lonLat,15);
-
 }
 
 
