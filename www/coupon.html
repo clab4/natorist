@@ -2,16 +2,23 @@
 <ons-page id="coupon-page">
     <ons-toolbar style="background-color:#81DAF5">
         <div class="center">クーポン一覧</div>
-        <div class="left">
-            <ons-toolbar-button onclick="fn.open()">
-                <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+         <div class="left">
+            <ons-toolbar-button onclick="fn.open()"  modifier="outline">
+                <ons-icon icon="ion-navicon, material:md-menu" style="font-size:32px; vertical-align:-6px;"></ons-icon>
             </ons-toolbar-button>
         </div>
         <div class="right">
-          <ons-toolbar-button onclick="fn.load('coupon.html')">更新</ons-toolbar-button>
+          <ons-toolbar-button onclick="fn.load('coupon.html')"  modifier="outline" >更新</ons-toolbar-button>
         </div>
     </ons-toolbar>
-  
+  　
+  <div>
+  <form action="cgi-bin/example.cgi" method="post" class="form1">
+  <input type="search" name="search" placeholder="キーワードを入力" class="search1">
+  <input type="submit" name="submit" value="検索" class="button1">
+</form>
+  </div>
+
     <ons-list>
         <div id="couponItems"></div>
     </ons-list>
