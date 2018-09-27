@@ -38,7 +38,12 @@ table.installationData td {
     overflow: hidden;  
     background-image: linear-gradient(45deg, #709dff 0%, #91fdb7 100%);
     transition: .4s;
-    margin-top: 8vw;
+    margin-top: 3vw;
+}
+
+/*ツールバー*/
+.toolbar{
+  background-color:#81DAF5;
 }
 
 
@@ -47,9 +52,10 @@ table.installationData td {
     height: auto;
     width: 100%;
     margin-bottom: 5%;
-    margin-top: 1%;
     text-align: center;
      background-color : #FBEFF2;
+     padding: 5px;
+    border: solid 5px #e17b34;
 }
 
 .map{
@@ -58,9 +64,11 @@ table.installationData td {
 }
 
 /*ボタンサイズ*/
-button.button1{
+.button1{
     /* 文字サイズを1.4emに指定 */
     font-size: 1.4em;
+
+    width:18%;
  
     /* 文字の太さをboldに指定 */
     font-weight: bold;
@@ -139,4 +147,25 @@ pre {
 .tabbar__button {
     /*height: 49px デフォルト*/
     height: 9vh ;
+}
+
+/*検索フォーム*/
+.form1{
+  position:relative;/*フォームの相対位置*/	
+margin-bottom:15px;/*フォームの下に余白*/
+padding:10px;
+}
+
+.search1{
+  width:80%;
+  padding:10px;
+font-size:20px;
+}
+
+/*トップページヘッダ*/
+.header{
+  background-image: url('../img/natori.jpg');
+  background-size:contain;
+  width: 100%;
+  height: 10%;
 }

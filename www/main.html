@@ -1,16 +1,20 @@
 <ons-page id="main-page" >
     
-    <div class="page__background" style="background-image: url('img/natori.jpg');background-size: cover;"></div>
-    <ons-toolbar style="background-color:#81DAF5;">
+    <ons-toolbar class="toolbar">
         <div class="center" >トップページ</div>
         <div class="left">
-            <ons-toolbar-button onclick="fn.open()">
-                <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+            <ons-toolbar-button onclick="fn.open()" modifier="outline" >
+                <ons-icon icon="ion-navicon, material:md-menu" style="font-size:32px; vertical-align:-6px;"></ons-icon>
             </ons-toolbar-button>
         </div>
     </ons-toolbar>
+
+    <div class="header">
+      <img src="img/natorist.jpg" />
+    </div>
+
     <!--カルーセル-->
-    <ons-carousel swipeable overscrollable auto-scroll auto-scroll-ratio="0.0"  var="carousel" style="background-image:url('img/b119.jpg');" >
+    <ons-carousel swipeable overscrollable auto-scroll auto-scroll-ratio="0.0"  var="carousel" style="background-image:url('img/b119.jpg');height:53%;" >
         ニュース<div id = "newsItems"></div> <!-- アイテムをjavascriptでかける-->
     </ons-carousel>
     
