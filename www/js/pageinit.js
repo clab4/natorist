@@ -118,7 +118,7 @@ function displayList(dbName, listId){
 
 　//開始期間、終了期間と比較
   var events = ncmb.DataStore(dbName);
-  events.lessThanOrEqualTo("startDate",today)
+  events .lessThanOrEqualTo("startDate",today)
   .greaterThanOrEqualTo("endDate",today)
   .fetchAll() 
  .then(function(results){
@@ -173,16 +173,17 @@ function displayList(dbName, listId){
                   c_limit[j]='無制限';
                 }
                   if(c_limit[j]!=0){
-       items += '<ons-list-item tappable modifier="chevron" onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+','+"'"+result.get("objectId")+"'"+','+""+')"><div class="left"><img class="list-item__thumbnail" src ="'+reader.result+'" /></div><div class="center"><span class="list-item__title">'+result.name+'</span><span class="list-item__title">残り'+deadline+''+c_limit[j]+'</span></div></ons-list-item>';   
-                  }else{
-        items += '<ons-list-item style="pointer-events: none;background-color:#BDBDBD;" tappable　modifier="chevron" ><div class="left"><img class="list-item__thumbnail" src ="'+reader.result+'" /></div><div class="center"><span class="list-item__title">'+result.name+'</span><span class="list-item__title">残り'+deadline+''+c_limit[j]+'</span></div><div class="right">使用済み</div></ons-list-item>';
-                  }
+       items += '<ons-list-item tappable modifier="chevron" onclick="onClickItem('+"'"+result.get("link")+"'"+','+"'"+dbName+"'"+','+"'"+result.get("objectId")+"'"+','+""+')"><div class="left"><img class="list-item__thumbnail" src ="'+reader.result+'" /></div><div class="center"><span class="list-item__title">'+result.name+'</span><span class="list-item__title" style="font-size:80%">残り'+c_limit[j]+' '+deadline+'</span></div></ons-list-item>';   
+                   }
+        //else{
+        // items += '<ons-list-item style="pointer-events: none;background-color:#BDBDBD;" tappable　modifier="chevron" ><div class="left"><img class="list-item__thumbnail" src ="'+reader.result+'" /></div><div class="center"><span class="list-item__title">'+result.name+'</span><span class="list-item__title" style="font-size:80%">残り'+c_limit[j]+' '+deadline+'</span></div><div class="right">使用済み</div></ons-list-item>';
+        //           }
                    document.getElementById(listId).innerHTML = items;    
                     }
         })
 
    //ニュース
-    }else if(dbName=="News_List"){          
+    }else if(dbName=="News_List"){         
       var  reader = new FileReader();  //ファイルの読み込み 
       var pic=result.thumbnail;
        loadNews(pic,reader);
@@ -374,6 +375,6 @@ function showMap(){
     }
 }
 
-
-
-
+function searchItem(){
+  console.log("asaa");
+}
